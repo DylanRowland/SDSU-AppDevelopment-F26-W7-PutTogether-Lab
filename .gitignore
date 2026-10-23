@@ -1,0 +1,14 @@
+# Python virtual environments and generated Python bytecode.
+.venv/
+__pycache__/
+*.pyc
+# Node dependencies and build output.
+node_modules/
+dist/
+# Local secrets must never be committed.
+.env
+backend/.env
+frontend/.env
+# Test/tool caches and operating-system metadata.
+.pytest_cache/
+.DS_Store

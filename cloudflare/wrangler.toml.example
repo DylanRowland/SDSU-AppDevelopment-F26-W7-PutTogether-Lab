@@ -1,0 +1,17 @@
+# This is an intentionally unconnected deployment placeholder.
+# It is for the later Cloudflare/Hyperdrive discussion, not local Docker.
+
+# Wrangler uses this name when identifying the Worker project.
+name = "campuscatalog-integration-worker"
+# Entry point for the Worker code.
+main = "src/index.ts"
+# Cloudflare compatibility behavior date.
+compatibility_date = "2026-10-01"
+
+# LAB TODO: create a Hyperdrive configuration for an external PostgreSQL
+# provider, then replace the placeholder ID with the real configuration ID.
+[[hyperdrive]]
+# Name used by Worker code to access the binding.
+binding = "HYPERDRIVE"
+# Replace this placeholder with a real Hyperdrive configuration ID later.
+id = "REPLACE_WITH_HYPERDRIVE_CONFIG_ID"

@@ -1,0 +1,1 @@
+"""CampusCatalog FastAPI application package."""

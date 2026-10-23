@@ -1,0 +1,8 @@
+# Dependencies are installed by the Dockerfile inside the image.
+node_modules
+# Build output is not needed for the Vite development server.
+dist
+# Keep local environment files out of the image build context.
+.env
+# Git history is not part of the frontend image.
+.git

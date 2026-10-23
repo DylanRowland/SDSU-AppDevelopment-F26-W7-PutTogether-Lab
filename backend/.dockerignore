@@ -1,0 +1,9 @@
+# Do not send local Python environments into the Docker build context.
+.venv
+# Python can recreate these files inside the image.
+__pycache__
+*.pyc
+# Keep local credentials out of the image.
+.env
+# Git history is not needed to run the application.
+.git

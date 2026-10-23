@@ -1,0 +1,13 @@
+# Web framework and ASGI server.
+fastapi
+uvicorn[standard]
+# Request validation and email validation support.
+pydantic[email]
+# ORM used to map Python models to PostgreSQL.
+SQLAlchemy
+# PostgreSQL driver used by SQLAlchemy.
+psycopg[binary]
+# Optional local .env loading.
+python-dotenv
+# Password hashing with Argon2 support.
+pwdlib[argon2]

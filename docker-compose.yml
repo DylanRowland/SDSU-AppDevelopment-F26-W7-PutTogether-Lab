@@ -1,0 +1,56 @@
+ # Compose creates one network so services can address each other by service name.
+services:
+  # PostgreSQL is the database service.
+  postgres:
+    # Docker downloads this image if it is not already local.
+    image: postgres:16-alpine
+    container_name: week7-postgres
+    # These variables configure the official Postgres image on first startup.
+    environment:
+      POSTGRES_DB: campuscatalog
+      POSTGRES_USER: labuser
+      POSTGRES_PASSWORD: labpassword
+    # Publish database port 5432 to the host for inspection tools.
+    ports:
+      - "5432:5432"
+    # Keep database files after the container is stopped or recreated.
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+
+  # FastAPI is the API service.
+  backend:
+    # Build an image from backend/Dockerfile.
+    build: ./backend
+    container_name: week7-backend
+    # Environment variables are injected into the backend container.
+    environment:
+      # LAB BREAKPOINT: change postgresql to the Compose service name postgres.
+      DATABASE_URL: postgresql+psycopg://labuser:labpassword@postgresql:5432/campuscatalog
+      # LAB BREAKPOINT: change 5174 to the frontend's published port 5173.
+      FRONTEND_ORIGIN: http://localhost:5174
+    # Publish FastAPI's internal port 8000 as host port 8000.
+    ports:
+      - "8000:8000"
+    # Start the database container before the backend container.
+    depends_on:
+      - postgres
+
+  # React/Vite is the browser-facing service.
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # LAB BREAKPOINT: change 8001 to the backend's published port 8000.
+        VITE_API_BASE_URL: http://localhost:8001
+    container_name: week7-frontend
+    # Publish Vite's internal port 5173 as host port 5173.
+    ports:
+      - "5173:5173"
+    # Start the backend container before the frontend container.
+    depends_on:
+      - backend
+
+ # A named volume gives PostgreSQL durable local storage.
+volumes:
+  postgres_data:
