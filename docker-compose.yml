@@ -26,9 +26,9 @@ services:
     # Environment variables are injected into the backend container.
     environment:
       # LAB BREAKPOINT: change postgresql to the Compose service name postgres.
-      DATABASE_URL: postgresql+psycopg://labuser:labpassword@postgresql:5432/campuscatalog
+      DATABASE_URL: postgresql+psycopg://labuser:labpassword@postgres:5432/campuscatalog
       # LAB BREAKPOINT: change 5174 to the frontend's published port 5173.
-      FRONTEND_ORIGIN: http://localhost:5174
+      FRONTEND_ORIGIN: http://localhost:5173
     # Publish FastAPI's internal port 8000 as host port 8000.
     ports:
       - "8000:8000"
@@ -42,7 +42,7 @@ services:
       context: ./frontend
       args:
         # LAB BREAKPOINT: change 8001 to the backend's published port 8000.
-        VITE_API_BASE_URL: http://localhost:8001
+        VITE_API_BASE_URL: http://localhost:8000
     container_name: week7-frontend
     # Publish Vite's internal port 5173 as host port 5173.
     ports:
